@@ -1,65 +1,66 @@
-PWindow win;
 
-PGraphics draw;
-float pppmouseX, pppmouseY, ppmouseX, ppmouseY, ppointx, ppointy;
-//float witch;
-float eraserOrPen = 255;
-float darkLightMode = 0;
-float release = 1;
-float s = 700;
+let bep;
+let pppmouseX, pppmouseY, ppmouseX, ppmouseY, ppointx, ppointy;
+//let witch;
+let eraserOrPen = 255;
+let darkLightMode = 0;
+let release = 1;
+let s = 700;
 
-public void settings () {
-  size(800, 800);
+function setup() { 
+  if(windowHeight < windowWidth){
+         bep = createGraphics(windowHeight, windowHeight);
+  createCanvas(windowHeight, windowHeight);
+     } else {
+           bep = createGraphics(windowWidth, windowWidth);
+  createCanvas(windowWidth, windowWidth);
+     }
 }
 
-void setup() { 
-  win = new PWindow();
-  draw = createGraphics(width, height);
-}
+let a, b, c, d, e, f = 1;
 
-float a, b, c, d, e, f = 1;
-
-void mouseWheel(MouseEvent event) {
-  float e = event.getCount();
+function mouseWheel(event) {
+  let e = event.delta;
   s = s+e;
 }
 
-void draw() {
-  cursor(CROSS);
+function draw() {
+  //cursor(CROSS);
+  noCursor();
   //screenshots
-  if (keyPressed && (key == 's') && (release == 0)) {
-    saveFrame("/Users/ashleyanderson/Desktop/Processing Code/What Its Like To Chew 5 Gum/ScreenCaptures/screenshot-######.png");
-    release = 1;
-  }
+  // if (keyIsPressed && (key == 's') && (release == 0)) {
+  //   saveFrame("/Users/ashleyanderson/Desktop/Processing Code/What Its Like To Chew 5 Gum/ScreenCaptures/screenshot-######.png");
+  //   release = 1;
+  // }
   //screenshots
 
-  if (keyPressed && (key == 'l') && (darkLightMode == 1) && (release == 0)) {
+  if (keyIsPressed && (key == 'l') && (darkLightMode == 1) && (release == 0)) {
     darkLightMode = 0;
     release = 1;
-  } else if (keyPressed && (key == 'l') && (darkLightMode == 0) && (release == 0)) {
+  } else if (keyIsPressed && (key == 'l') && (darkLightMode == 0) && (release == 0)) {
     darkLightMode = 1;
     release = 1;
   } 
 
-  if (keyPressed && (key == 'p') && (eraserOrPen == 0) && (release == 0)) {
+  if (keyIsPressed && (key == 'p') && (eraserOrPen == 0) && (release == 0)) {
     eraserOrPen = 255;
     release = 1;
-  } else if (keyPressed && (key == 'p') && (eraserOrPen == 255) && (release == 0)) {
+  } else if (keyIsPressed && (key == 'p') && (eraserOrPen == 255) && (release == 0)) {
     eraserOrPen = 0;
     release = 1;
   } 
-  if (keyPressed == false) {
+  if (keyIsPressed == false) {
     release = 0;
   }
   //eraserOrPen
-  if (keyPressed && (key == 'p') && (eraserOrPen == 0) && (release == 0)) {
+  if (keyIsPressed && (key == 'p') && (eraserOrPen == 0) && (release == 0)) {
     eraserOrPen = 255;
     release = 1;
-  } else if (keyPressed && (key == 'p') && (eraserOrPen == 255) && (release == 0)) {
+  } else if (keyIsPressed && (key == 'p') && (eraserOrPen == 255) && (release == 0)) {
     eraserOrPen = 0;
     release = 1;
   } 
-  if (keyPressed == false) {
+  if (keyIsPressed == false) {
     release = 0;
   }
   //eraserOrPen end
@@ -69,11 +70,11 @@ void draw() {
     background(255);
   }
   //draw
-  draw.beginDraw();
-  draw.stroke(eraserOrPen);
-  float pointx = 1;
-  float pointy = 1;
-  if (keyPressed) {
+  //bep.beginDraw();
+  bep.stroke(eraserOrPen);
+  let pointx = 1;
+  let pointy = 1;
+  if (keyIsPressed) {
     if (key == 'x' || key == 'X') {
       pointx = mouseX;
       if (mouseY > height/2) {
@@ -103,9 +104,9 @@ void draw() {
   }
 
 
-  draw.stroke(eraserOrPen);
-  if (mousePressed) {
-    draw.noFill();
+  bep.stroke(eraserOrPen);
+  if (mouseIsPressed) {
+    bep.noFill();
 
     //stars
     //draw.line(pointx, pointy, pointx, pointy);
@@ -118,12 +119,12 @@ void draw() {
     //draw.endShape();
 
 
-    draw.beginShape();
-    draw.vertex(pppmouseX, pppmouseY);
-    draw.vertex(ppmouseX, ppmouseY);
-    draw.vertex(ppointx, ppointy);
-    draw.vertex(pointx, pointy);
-    draw.endShape();
+    bep.beginShape();
+    bep.vertex(pppmouseX, pppmouseY);
+    bep.vertex(ppmouseX, ppmouseY);
+    bep.vertex(ppointx, ppointy);
+    bep.vertex(pointx, pointy);
+    bep.endShape();
   }
 
   pppmouseX = ppmouseX;
@@ -134,13 +135,13 @@ void draw() {
   ppointy = pointy;
 
   //reset
-  if (keyPressed && (key == 'r' || key == 'R')) {
-    draw.clear();
+  if (keyIsPressed && (key == 'r' || key == 'R')) {
+    bep.clear();
   }
   //reset end 
-  draw.endDraw();
+  //bep.endDraw();
 
-  image(draw, 0, 0);
+  image(bep, 0, 0);
   //draw end
 
   //ellipses
@@ -148,27 +149,28 @@ void draw() {
   noFill();
   stroke(125, 125, 125, 200);
   //hide
-  if (keyPressed && (key == 'h' || key == 'H')) {
+  if (keyIsPressed && (key == 'h' || key == 'H')) {
     stroke(125, 125, 125, 0);
   }
   //hide
-  float size = s;
+  ellipse(pointx, pointy, 8, 8);
+  let size = s;
   ellipse(width/2, height/2, size, size);
-  if (keyPressed && (key == 'x' || key == 'X')) {
+  if (keyIsPressed && (key == 'x' || key == 'X')) {
   } else {
     a = size/2;
     b = sqrt(pow(pointy-(width/2), 2)/(1-(pow(pointx-(height/2), 2)/pow(a, 2))));
   }
   ellipse(width/2, height/2, 2*a, 2*b);
 
-  if (keyPressed && (key == 'y' || key == 'Y')) {
+  if (keyIsPressed && (key == 'y' || key == 'Y')) {
   } else {
     c = size/2;
     d = sqrt(pow(pointx-(height/2), 2)/(1-(pow(pointy-(width/2), 2)/pow(c, 2))));
   }
   ellipse(width/2, height/2, 2*d, 2*c);
   //perspective line
-  if (keyPressed && (key == 'z' || key == 'Z')) {
+  if (keyIsPressed && (key == 'z' || key == 'Z')) {
   } else {
     e = pointx;
     f = pointy;
