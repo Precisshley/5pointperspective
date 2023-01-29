@@ -179,7 +179,8 @@ function draw() {
   line(width, (((height/2)-f)/((width/2)-e))*(width/2)+(height/2), width/2, height/2);
   //ellipses
 }
-//to do:
+// TODO: 
 //option between curveVertex and vertex maybe also just speckles like it was
 //fix curve vertex glitch at edges pof ellipses
 //fill bucket
+//fix scrollwheel page zoom (use board code)
