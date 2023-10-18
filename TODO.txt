@@ -1,0 +1,6 @@
+TODO: 
+    -option between curveVertex and vertex maybe also just speckles like it was
+    -allow drawing when other non-special keys are pressed
+    -fill bucket
+    -fix scrollwheel page zoom (use board code)
+    -look into undo and dark/lightmode proper functions
