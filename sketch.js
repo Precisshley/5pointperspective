@@ -12,15 +12,24 @@ let a, b, aM, bM, zAxisX, zAxisY  = 1;
 //aM and bM are the actual values being saved for the drawing calculations.
 //zAxisX and zAxisY is the cordinate for drawing the z-guideline from the middle to the edge of the canvas
 
-function setup() { 
-  if(windowHeight < windowWidth){
-         drawingCanvas = createGraphics(windowHeight, windowHeight);
-  createCanvas(windowHeight, windowHeight);
-     } else {
-           drawingCanvas = createGraphics(windowWidth, windowWidth);
-  createCanvas(windowWidth, windowWidth);
-     }
+function setup() {
+  drawingCanvas = createGraphics(625, 625);
+  var canvas = createCanvas(625, 625);
+  canvas.parent('sketch');
+
+  // Add event listeners to control scrolling
+  drawingCanvas.elt.addEventListener('mouseenter', () => {
+    document.body.style.overflow = 'hidden'; // Disable page scroll
+});
+
+drawingCanvas.elt.addEventListener('mouseleave', () => {
+    document.body.style.overflow = ''; // Enable page scroll
+});
 }
+
+// function windowResized() {
+//   resizeCanvas(500, 500);
+// }
 
 function mouseWheel(event) {
   let e = event.delta;
