@@ -6,6 +6,12 @@
     <script src="sketch.js"></script>
     
     <link rel="stylesheet" type="text/css" href="style.css">
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Short+Stack&display=swap');
+      body {
+        font-family: 'Short Stack', cursive;
+      }
+    </style>
     <meta charset="utf-8" />
 
   </head>
@@ -14,13 +20,63 @@
 <div class="container-2">
   <div class="container-2-box">
     <h1>Five Point Perspective Sketching</h1>
-    <p>Years ago when I was doodling in my highschool classes, I got really into drawing these funny looking spheres.</p>
-    <p>If you've heard of drawing in 1-point or 2-point perspective, it's the same idea: Points on the page represent different axes. Choose a spot on the page and draw lines towards the appropriate vanishing points. The key difference is that in 5-point perspective, lines curve along the x and y axes.</p>
+    <section class="intro">
+      <p>Years ago when I was doodling in my highschool classes, I got really into drawing these funny looking spheres.</p>
+      <p>If you've heard of drawing in 1-point or 2-point perspective, it's the same idea: Points on the page represent different axes. Choose a spot on the page and draw lines towards the appropriate vanishing points. The key difference is that in 5-point perspective, lines curve along the x and y axes.</p>
+    </section>
     <h2>How does this magical contraption perform its wizardry?</h2>
+    <h3>Key Binding Settings</h3>
+    <div class="form-wrapper">
+      <div class="form-container">
+        <div class="form-group">
+            <label for="toggleEraserPen">Toggle Eraser/Pen:</label>
+            <input class="binding-btn" type="text" id="toggleEraserPen" value="p" readonly>
+        </div>
+        <div class="form-group">
+            <label for="toggleDarkLight">Toggle Dark/Light Mode:</label>
+            <input class="binding-btn" type="text" id="toggleDarkLight" value="l" readonly>
+        </div>
+        <div class="form-group">
+            <label for="clearCanvas">Clear Canvas:</label>
+            <input class="binding-btn" type="text" id="clearCanvas" value="r" readonly>
+        </div>
+        <div class="form-group">
+            <label for="zLine">Draw Z Line:</label>
+            <input class="binding-btn" type="text" id="zLine" value="z" readonly>
+        </div>
+        <div class="form-group">
+            <label for="xAxis">Draw on X Axis:</label>
+            <input class="binding-btn" type="text" id="xAxis" value="x" readonly>
+        </div>
+        <div class="form-group">
+            <label for="yAxis">Draw on Y Axis:</label>
+            <input class="binding-btn" type="text" id="yAxis" value="y" readonly>
+        </div>
+      </div>
+      <div class="slider-container">
+          <label for="number-slider">Circle Radius: (can use scroll wheel instead)</label>
+          <input type="range" id="number-slider" min="1" max="1000" value="500" oninput="updateValue1(this.value)">
+          <span id="slider-value1">500</span>
+
+          <label for="number-slider">Stroke:</label>
+          <input type="range" id="number-slider" min="1" max="50" value="1" oninput="updateValue2(this.value)">
+          <span id="slider-value2">1</span>
+
+          <label for="number-slider">Opacity:</label>
+          <input type="range" id="number-slider" min="0" max="255" value="255" oninput="updateValue3(this.value)">
+          <span id="slider-value3">255</span>
+      </div>
+    </div>
+    <img class="sketch-image-1" src="images/IMG_1539.png" alt="Sketch of spikey sphere">
+    <img class="sketch-image-2" src="images/IMG_1543.png" alt="Sketch of sphere">
+    <img class="sketch-image-3" src="images/IMG_1544.png" alt="Sketch of sphere">
+    <img class="sketch-image-4" src="images/IMG_1546.png" alt="Sketch of sphere">
   </div>
 
-  <div class="container-2-box" id="sketch">
-    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam nec elit urna. Suspendisse a erat a nibh imperdiet fermentum. In eleifend ultricies massa, id pretium purus convallis nec. </p>
+  <div class="container-2-box">
+    <div id="sketch">
+    </div>
+    <p>Created by Ashley Anderson - Open source code available on Github</p>
   </div>
 </div>
     

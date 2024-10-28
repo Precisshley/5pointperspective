@@ -4,8 +4,18 @@ let pppmouseX, pppmouseY, ppmouseX, ppmouseY, ppointx, ppointy; //change x and y
 let eraserOrPen = 255;
 let darkLightMode = 0;
 let release = 1;
-let circleSize = 700;
+let circleSize = 500;
 let halfCircle = circleSize/2;
+let strokeW = 1;
+
+let keyBindings = {
+  toggleEraserPen: 'p',
+  toggleDarkLight: 'l',
+  clearCanvas: 'r',
+  zLine: 'z',
+  xAxis: 'x',
+  yAxis: 'y'
+};
 
 let a, b, aM, bM, zAxisX, zAxisY  = 1;
 //a and b are the width and height of the ellipse guidelines
@@ -17,25 +27,62 @@ function setup() {
   var canvas = createCanvas(625, 625);
   canvas.parent('sketch');
 
-  // Add event listeners to control scrolling
-  drawingCanvas.elt.addEventListener('mouseenter', () => {
-    document.body.style.overflow = 'hidden'; // Disable page scroll
-});
+  const inputIds = [
+      'toggleEraserPen',
+      'toggleDarkLight',
+      'clearCanvas',
+      'zLine',
+      'xAxis',
+      'yAxis'
+  ];
 
-drawingCanvas.elt.addEventListener('mouseleave', () => {
-    document.body.style.overflow = ''; // Enable page scroll
-});
+  inputIds.forEach(id => {
+      const input = document.getElementById(id);
+      input.addEventListener('focus', () => {
+          input.value = '';
+      });
+
+      input.addEventListener('keydown', function (event) {
+          event.preventDefault();
+          const key = event.key === ' ' ? 'Space' : event.key;
+          input.value = key;
+          keyBindings[id] = key;
+      });
+  });
+
+  // initialize slider values
+  updateValue1(circleSize);
+  updateValue2(strokeW);
+  updateValue3(255);
 }
 
-// function windowResized() {
-//   resizeCanvas(500, 500);
-// }
+function updateValue1(value) {
+  document.getElementById('slider-value1').textContent = value;
+  circleSize = value;
+  halfCircle = circleSize / 2;
+}
+
+function updateValue2(value) {
+  document.getElementById('slider-value2').textContent = value;
+  strokeW = int(value);
+  console.log(strokeW);
+}
+
+function updateValue3(value) {
+  document.getElementById('slider-value3').textContent = value;
+}
 
 function mouseWheel(event) {
   let e = event.delta;
-  circleSize = circleSize+e;
-  halfCircle = circleSize/2;
+  let newValue = int(circleSize) + e;
+
+  if (newValue >= 1 && newValue <= 1000) {
+      let slider = document.getElementById('number-slider');
+      slider.value = newValue;
+      updateValue1(newValue);
+  }
 }
+
 
 function draw() {
   let pointx,pointy = 1; //drawing cursor position when locked onto guidelines
@@ -52,44 +99,18 @@ function draw() {
   // }
   //screenshots
 
-
-  //dark/light mode
-  if (keyIsPressed && (key == 'l') && (darkLightMode == 1) && (release == 0)) {
-    darkLightMode = 0;
-    release = 1;
-  } else if (keyIsPressed && (key == 'l') && (darkLightMode == 0) && (release == 0)) {
-    darkLightMode = 1;
-    release = 1;
-  } 
-
-  if (darkLightMode == 0) {
-    background(0);
-  } else {  
-    background(255);
-  }
-
-  //eraserOrPen
-  if (keyIsPressed && (key == 'p') && (eraserOrPen == 0) && (release == 0)) {
-    eraserOrPen = 255;
-    release = 1;
-  } else if (keyIsPressed && (key == 'p') && (eraserOrPen == 255) && (release == 0)) {
-    eraserOrPen = 0;
-    release = 1;
-  } 
-  if (keyIsPressed == false) {
-    release = 0;
-  }
-
-
-  //draw
-  //drawingCanvas.beginDraw();
-  
-  drawingCanvas.stroke(eraserOrPen); //sets to eraser for postioning stage
-
   if (keyIsPressed) {
-    
-      //draw z line [start]
-    if (key == 'z' || key == 'Z') {
+    if (key === keyBindings.toggleEraserPen && release === 0) {
+        eraserOrPen = eraserOrPen === 255 ? 0 : 255;
+        release = 1;
+    } else if (key === keyBindings.toggleDarkLight && release === 0) {
+        darkLightMode = darkLightMode === 0 ? 1 : 0;
+        release = 1;
+    } else if (key === keyBindings.clearCanvas) {
+        drawingCanvas.clear();
+    } 
+
+    if (key === keyBindings.zLine) {
       if (PI/4<abs(atan(zAxisY/zAxisX))) {
         pointy = (mouseY - (height/2));
         pointx = (pointy/(zAxisY/zAxisX));
@@ -98,9 +119,8 @@ function draw() {
         pointy = ((zAxisY/zAxisX)*pointx);
       }
     }
-      //draw z line [end]
     
-    else if (key == 'x' || key == 'X') { //calculates drawing on x axis ellipse
+    else if (key === keyBindings.xAxis) { //calculates drawing on x axis ellipse
       aM = halfCircle;
       bM = a;
       
@@ -112,7 +132,7 @@ function draw() {
       pointy = radius * sin(angle);
       
     }
-    else if (key == 'y' || key == 'Y') { //calculates drawing on y axis ellipse
+    else if (key === keyBindings.yAxis) { //calculates drawing on y axis ellipse
       aM = b;
       bM = halfCircle;
       
@@ -123,25 +143,33 @@ function draw() {
       pointx = radius * cos(angle);
       pointy = radius * sin(angle);
     }
-    
-  } else { //set cursor to mouse pos (no guideline lock on)
+
+  } else {
+    release = 0;
     pointx = (mouseX - (width/2));
     pointy = (mouseY - (height/2));
   }
+
+  if (darkLightMode == 0) {
+    background(0);
+  } else {  
+    background(255);
+  }
+
+
+  //draw
   
-  if (!(keyIsPressed && (key == 'x' || key == 'X'))) { //calculate height of x ellipse
+  if (!(keyIsPressed && (key === keyBindings.xAxis))) { //calculate height of x ellipse
     a = sqrt(pow((mouseY - (height/2)), 2)/(1-(pow((mouseX - (width/2)), 2)/pow(halfCircle, 2))));
   }
-  if (!(keyIsPressed && (key == 'y' || key == 'Y'))) { //calculate width of y ellipse
+  if (!(keyIsPressed && (key === keyBindings.yAxis))) { //calculate width of y ellipse
     b = sqrt(pow((mouseX - (width/2)), 2)/(1-(pow((mouseY - (height/2)), 2)/pow(halfCircle, 2)))); 
   }
-
-
 
   drawingCanvas.stroke(eraserOrPen);
   if (mouseIsPressed) {
     drawingCanvas.noFill();
-
+    drawingCanvas.strokeWeight(strokeW);
     //stars
     // line(pointx, pointy, pointx, pointy);
 
@@ -159,6 +187,7 @@ function draw() {
     drawingCanvas.vertex(pointx + (width/2), pointy + (height/2));
     drawingCanvas.endShape();
   }
+  //strokeWeight(1);
 
   pppmouseX = ppmouseX;
   pppmouseY = ppmouseY;
@@ -167,11 +196,6 @@ function draw() {
   ppointx = pointx;
   ppointy = pointy;
 
-
-  if (keyIsPressed && (key == 'r' || key == 'R')) {
-    drawingCanvas.clear();
-  }
-  
   image(drawingCanvas, width/-2, height/-2); //draws lines behind guidelines
 
   
