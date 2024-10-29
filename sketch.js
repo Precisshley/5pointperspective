@@ -1,15 +1,14 @@
 
 let drawingCanvas; //the canvas drawing vectors are attached to
 let pppmouseX, pppmouseY, ppmouseX, ppmouseY, ppointx, ppointy; //change x and y's to class
-let eraserOrPen = 255;
-let darkLightMode = 0;
+let darkLightMode = 1;
 let release = 1;
 let circleSize = 500;
 let halfCircle = circleSize/2;
 let strokeW = 1;
+let shade = 0;
 
 let keyBindings = {
-  toggleEraserPen: 'p',
   toggleDarkLight: 'l',
   clearCanvas: 'r',
   zLine: 'z',
@@ -28,7 +27,6 @@ function setup() {
   canvas.parent('sketch');
 
   const inputIds = [
-      'toggleEraserPen',
       'toggleDarkLight',
       'clearCanvas',
       'zLine',
@@ -53,7 +51,7 @@ function setup() {
   // initialize slider values
   updateValue1(circleSize);
   updateValue2(strokeW);
-  updateValue3(255);
+  updateValue3(shade);
 }
 
 function updateValue1(value) {
@@ -65,23 +63,23 @@ function updateValue1(value) {
 function updateValue2(value) {
   document.getElementById('slider-value2').textContent = value;
   strokeW = int(value);
-  console.log(strokeW);
 }
 
 function updateValue3(value) {
   document.getElementById('slider-value3').textContent = value;
+  shade = int(value);
 }
 
-function mouseWheel(event) {
-  let e = event.delta;
-  let newValue = int(circleSize) + e;
+// function mouseWheel(event) {
+//   let e = event.delta;
+//   let newValue = int(circleSize) + e;
 
-  if (newValue >= 1 && newValue <= 1000) {
-      let slider = document.getElementById('number-slider');
-      slider.value = newValue;
-      updateValue1(newValue);
-  }
-}
+//   if (newValue >= 1 && newValue <= 1000) {
+//       let slider = document.getElementById('number-slider');
+//       slider.value = newValue;
+//       updateValue1(newValue);
+//   }
+// }
 
 
 function draw() {
@@ -100,10 +98,7 @@ function draw() {
   //screenshots
 
   if (keyIsPressed) {
-    if (key === keyBindings.toggleEraserPen && release === 0) {
-        eraserOrPen = eraserOrPen === 255 ? 0 : 255;
-        release = 1;
-    } else if (key === keyBindings.toggleDarkLight && release === 0) {
+    if (key === keyBindings.toggleDarkLight && release === 0) {
         darkLightMode = darkLightMode === 0 ? 1 : 0;
         release = 1;
     } else if (key === keyBindings.clearCanvas) {
@@ -166,7 +161,7 @@ function draw() {
     b = sqrt(pow((mouseX - (width/2)), 2)/(1-(pow((mouseY - (height/2)), 2)/pow(halfCircle, 2)))); 
   }
 
-  drawingCanvas.stroke(eraserOrPen);
+  drawingCanvas.stroke(shade);
   if (mouseIsPressed) {
     drawingCanvas.noFill();
     drawingCanvas.strokeWeight(strokeW);
