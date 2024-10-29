@@ -25,13 +25,11 @@
       <p>If you've heard of drawing in 1-point or 2-point perspective, it's the same idea: Points on the page represent different axes. Choose a spot on the page and draw lines towards the appropriate vanishing points. The key difference is that in 5-point perspective, lines curve along the x and y axes.</p>
     </section>
     <h2>How does this magical contraption perform its wizardry?</h2>
-    <h3>Key Binding Settings</h3>
+    <p>While drawing on the canvas there are three guide lines you can lock onto: the two ellipses on the x/y axis and the z line, pointing to the center. Hold down the x,y, or z keys and begin drawing. You will see a line drawn along the selected axis. It can be finicky but I hope you have fun!</p>
+      
     <div class="form-wrapper">
       <div class="form-container">
-        <div class="form-group">
-            <label for="toggleEraserPen">Toggle Eraser/Pen:</label>
-            <input class="binding-btn" type="text" id="toggleEraserPen" value="p" readonly>
-        </div>
+      <h3>Key Binding Settings</h3>
         <div class="form-group">
             <label for="toggleDarkLight">Toggle Dark/Light Mode:</label>
             <input class="binding-btn" type="text" id="toggleDarkLight" value="l" readonly>
@@ -54,17 +52,26 @@
         </div>
       </div>
       <div class="slider-container">
-          <label for="number-slider">Circle Radius: (can use scroll wheel instead)</label>
-          <input type="range" id="number-slider" min="1" max="1000" value="500" oninput="updateValue1(this.value)">
-          <span id="slider-value1">500</span>
+        <div class="slider-group">
+        <h3>Controls</h3>
+          <label for="number-slider">Circle Radius:</label>
+          <div class="form-group">
+            <input type="range" id="number-slider" min="1" max="1000" value="500" oninput="updateValue1(this.value)">
+            <span id="slider-value1">500</span>
+          </div>
 
           <label for="number-slider">Stroke:</label>
-          <input type="range" id="number-slider" min="1" max="50" value="1" oninput="updateValue2(this.value)">
-          <span id="slider-value2">1</span>
+          <div class="form-group">
+            <input type="range" id="number-slider" min="1" max="50" value="1" oninput="updateValue2(this.value)">
+            <span id="slider-value2">1</span>
+          </div>
 
-          <label for="number-slider">Opacity:</label>
-          <input type="range" id="number-slider" min="0" max="255" value="255" oninput="updateValue3(this.value)">
-          <span id="slider-value3">255</span>
+          <label for="number-slider">Shade:</label>
+          <div class="form-group">
+            <input type="range" id="number-slider" min="0" max="255" value="0" oninput="updateValue3(this.value)">
+            <span id="slider-value3">0</span>
+          </div>
+        </div>
       </div>
     </div>
     <img class="sketch-image-1" src="images/IMG_1539.png" alt="Sketch of spikey sphere">
@@ -76,7 +83,7 @@
   <div class="container-2-box">
     <div id="sketch">
     </div>
-    <p>Created by Ashley Anderson - Open source code available on Github</p>
+    <p class="credits">Created by <a href="https://github.com/Precisshley" target="_blank">Ashley Anderson</a> - Open source code available on <a href="https://github.com/Precisshley/5pointperspective" target="_blank">Github</a> :)</p>
   </div>
 </div>
     
