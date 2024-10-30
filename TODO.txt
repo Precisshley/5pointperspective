@@ -7,4 +7,3 @@ TODO:
     -add 1 and 2 point examples
     -link credits
     -update readme
-    -add save image button
