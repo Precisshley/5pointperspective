@@ -70,6 +70,10 @@ function updateValue3(value) {
   shade = int(value);
 }
 
+function downloadsketch(){
+  save(`fivepointsketch.png`);
+}
+
 // function mouseWheel(event) {
 //   let e = event.delta;
 //   let newValue = int(circleSize) + e;
