@@ -7,14 +7,17 @@ let circleSize = 500;
 let halfCircle = circleSize/2;
 let strokeW = 1;
 let shade = 0;
-
 let keyBindings = {
   toggleDarkLight: 'l',
   clearCanvas: 'r',
   zLine: 'z',
   xAxis: 'x',
-  yAxis: 'y'
+  yAxis: 'y',
+  hideLines: 'h'
 };
+
+let defaultGuideHide = 200
+let guidelineHide = defaultGuideHide;
 
 let a, b, aM, bM, zAxisX, zAxisY  = 1;
 //a and b are the width and height of the ellipse guidelines
@@ -31,7 +34,8 @@ function setup() {
       'clearCanvas',
       'zLine',
       'xAxis',
-      'yAxis'
+      'yAxis',
+      'hideLines'
   ];
 
   inputIds.forEach(id => {
@@ -46,6 +50,11 @@ function setup() {
           input.value = key;
           keyBindings[id] = key;
       });
+  });
+
+  const hideGuidelinesCheckbox = document.getElementById("hideGuidelines");
+  hideGuidelinesCheckbox.addEventListener("change", function () {
+    guidelineHide = hideGuidelinesCheckbox.checked ? 0 : defaultGuideHide; // Update guideline visibility based on checkbox
   });
 
   // initialize slider values
@@ -143,6 +152,15 @@ function draw() {
       pointy = radius * sin(angle);
     }
 
+    if (key === keyBindings.hideLines && release === 0) {
+      guidelineHide = (guidelineHide === 0) ? defaultGuideHide : 0; // Toggle visibility
+
+      const hideGuidelinesCheckbox = document.getElementById("hideGuidelines");
+      hideGuidelinesCheckbox.checked = (guidelineHide === 0);
+
+      release = 1;
+    }
+
   } else {
     release = 0;
     pointx = (mouseX - (width/2));
@@ -201,14 +219,21 @@ function draw() {
   
   //guidelines [start]
   noFill();
-  stroke(125, 125, 125, 200); //guideline colour
   
-  if (keyIsPressed && (key == 'h' || key == 'H')) { //hides guidelines (needs to actually disappear. Not just turn black)
-    stroke(125, 125, 125, 0);
-  }
+  // if (keyIsPressed && (key == 'h' || key == 'H')) { //hides guidelines
+  //   if (guidelineHide == 0) {
+  //     guidlineHide = 1;
+  //   } else {
+  //     guidlineHide = 0;
+  //   }
+  // }
+  stroke(125, 125, 125, defaultGuideHide);
   
   ellipse(pointx, pointy, 8, 8); //consider cross target with ellipses set to 80 in different axis
   ellipse((mouseX - (width/2)), (mouseY - (height/2)), 3, 3);
+
+  stroke(125, 125, 125, guidelineHide);
+  
   ellipse(0, 0, circleSize, circleSize);
   
   ellipse(0, 0, circleSize, 2*a); // x ellipse guideline
