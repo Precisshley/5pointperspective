@@ -2,9 +2,9 @@ TODO:
     -option between curveVertex and vertex maybe also just speckles like it was
     -allow drawing when other non-special keys are pressed
     -look into undo functions
-    -fix x and y lock. Ex. when x is locked, y guidelines should follow x circle, not cursor.
     -fix hot key buttons being empty when clicked
     -add 1 and 2 point examples
     -add screen breaks for content
     -update readme
     -make hide guideline checkbox bigger
+    -fix guidelines disappearing when any other key pressed
