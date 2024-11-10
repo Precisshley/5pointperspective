@@ -19,7 +19,7 @@ let keyBindings = {
 let defaultGuideHide = 200
 let guidelineHide = defaultGuideHide;
 
-let a, b, aM, bM, zAxisX, zAxisY  = 1;
+let a, b, aM, bM, zAxisX, zAxisY = 1;
 //a and b are the width and height of the ellipse guidelines
 //aM and bM are the actual values being saved for the drawing calculations.
 //zAxisX and zAxisY is the cordinate for drawing the z-guideline from the middle to the edge of the canvas
@@ -177,9 +177,13 @@ function draw() {
   //draw
   
   if (!(keyIsPressed && (key === keyBindings.xAxis))) { //calculate height of x ellipse
+    //aMouse = sqrt(pow(pointy, 2)/(1-(pow(pointx, 2)/pow(halfCircle, 2))));
+    
     a = sqrt(pow((mouseY - (height/2)), 2)/(1-(pow((mouseX - (width/2)), 2)/pow(halfCircle, 2))));
   }
   if (!(keyIsPressed && (key === keyBindings.yAxis))) { //calculate width of y ellipse
+    //bMouse = sqrt(pow(pointx, 2)/(1-(pow(pointy, 2)/pow(halfCircle, 2))));
+    
     b = sqrt(pow((mouseX - (width/2)), 2)/(1-(pow((mouseY - (height/2)), 2)/pow(halfCircle, 2)))); 
   }
 
@@ -230,15 +234,15 @@ function draw() {
   stroke(125, 125, 125, defaultGuideHide);
   
   ellipse(pointx, pointy, 8, 8); //consider cross target with ellipses set to 80 in different axis
-  ellipse((mouseX - (width/2)), (mouseY - (height/2)), 3, 3);
+  ellipse((mouseX - (width/2)), (mouseY - (height/2)), 3, 3); // inner ellipse
 
   stroke(125, 125, 125, guidelineHide);
   
   ellipse(0, 0, circleSize, circleSize);
   
-  ellipse(0, 0, circleSize, 2*a); // x ellipse guideline
+  ellipse(0, 0, circleSize, 2*(sqrt(pow(pointy, 2)/(1-(pow(pointx, 2)/pow(halfCircle, 2)))))); // x ellipse guideline
 
-  ellipse(0, 0, 2*b, circleSize); // y ellipse guideline
+  ellipse(0, 0, 2*(sqrt(pow(pointx, 2)/(1-(pow(pointy, 2)/pow(halfCircle, 2))))), circleSize); // y ellipse guideline
 
   if (!(keyIsPressed && (key == 'z' || key == 'Z'))) {
     zAxisX = pointx*100;
