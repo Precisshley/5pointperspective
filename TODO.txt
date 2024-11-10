@@ -5,6 +5,4 @@ TODO:
     -fix hot key buttons being empty when clicked
     -add 1 and 2 point examples
     -add screen breaks for content
-    -update readme
     -make hide guideline checkbox bigger
-    -fix guidelines disappearing when any other key pressed
