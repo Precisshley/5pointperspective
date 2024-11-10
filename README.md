@@ -47,22 +47,25 @@
 
 For a couple years when I was doodling I would play around with drawing in 5 point perspective. If you've heard of drawing in 1-point or 2-point perspective, it's the same idea: Points on the page represent different axes. Choose a spot on the page and draw lines towards the appropriate vanishing points. The key difference is that in 5-point perspective, lines curve along the x and y axes:
 
-<div style="display: flex; justify-content: space-around; align-items: center;">
-  <figure>
-    <img src="images/1PointEx.svg" alt="Logo" width="200" height="200">
-    <figcaption>One Point</figcaption>
-  </figure>
-
-  <figure>
-    <img src="images/2PointEx.svg" alt="Logo" width="200" height="200">
-    <figcaption>Two Points</figcaption>
-  </figure>
-
-  <figure>
-    <img src="images/5PointEx.svg" alt="Logo" width="200" height="200">
-    <figcaption>Five Points</figcaption>
-  </figure>
+<div style="display: flex; justify-content: center; gap: 20px;">
+  <p align="center">
+    <img src="images/1PointEx.svg" alt="1 Point Image" width="300" height="300">
+    <br>
+    <span>One Point</span>
+  </p>
+  <p align="center">
+    <img src="images/2PointEx.svg" alt="2 Point Image" width="300" height="300">
+    <br>
+    <span>Two Points</span>
+  </p>
+  <p align="center">
+    <img src="images/5PointEx.svg" alt="5 Point Image" width="300" height="300">
+    <br>
+    <span>5 Points</span>
+  </p>
 </div>
+
+
 
 As you may have noticed, compared to 1 and 2 points, 5 points can get a little overwhelming. I was getting tired of sketching out all those guidelines by hand and running out of erasers. That's why I made this program.
 
